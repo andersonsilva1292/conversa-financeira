@@ -153,7 +153,7 @@ const Index = () => {
         {/* Header */}
         <motion.div variants={itemVariants} className="flex items-center justify-between">
           <div>
-            <p className="text-sm text-muted-foreground mb-1">Finança IA</p>
+            <p className="text-sm text-muted-foreground mb-1">FinançaIA</p>
             <h1 className="text-3xl font-bold font-display text-foreground">{(() => {
               const now = new Date();
               const brasiliaHour = new Date(now.toLocaleString("en-US", { timeZone: "America/Sao_Paulo" })).getHours();
@@ -178,7 +178,7 @@ const Index = () => {
               </DialogHeader>
               <div className="space-y-4 mt-2">
                 <input value={form.description} onChange={e => setForm(f => ({ ...f, description: e.target.value }))} placeholder="Descrição" className="w-full bg-secondary text-foreground placeholder:text-muted-foreground px-4 py-3 rounded-lg text-sm outline-none border border-border focus:border-primary/50" />
-                <input type="number" step="0.01" value={form.amount} onChange={e => setForm(f => ({ ...f, amount: e.target.value }))} placeholder="Valor (negativo = gasto)" className="w-full bg-secondary text-foreground placeholder:text-muted-foreground px-4 py-3 rounded-lg text-sm outline-none border border-border focus:border-primary/50" />
+                <input type="number" step="0.01" value={form.amount} onChange={e => setForm(f => ({ ...f, amount: e.target.value }))} placeholder="Valor: Positivo +1 ou Negativo -1" className="w-full bg-secondary text-foreground placeholder:text-muted-foreground px-4 py-3 rounded-lg text-sm outline-none border border-border focus:border-primary/50" />
                 <select value={form.category} onChange={e => setForm(f => ({ ...f, category: e.target.value }))} className="w-full bg-secondary text-foreground px-4 py-3 rounded-lg text-sm outline-none border border-border focus:border-primary/50">
                   {Object.keys(categoryIcons).map(c => <option key={c} value={c}>{c}</option>)}
                 </select>
