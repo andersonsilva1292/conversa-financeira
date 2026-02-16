@@ -3,6 +3,8 @@ import { motion } from "framer-motion";
 import { Wallet, Mail, Lock, User, Eye, EyeOff, ArrowRight } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { useNavigate } from "react-router-dom";
+import { useAuth } from "@/hooks/useAuth";
+import { toast } from "sonner";
 
 const Login = () => {
   const [isSignup, setIsSignup] = useState(false);
@@ -10,11 +12,36 @@ const Login = () => {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [name, setName] = useState("");
+  const [loading, setLoading] = useState(false);
   const navigate = useNavigate();
+  const { signIn, signUp, user } = useAuth();
 
-  const handleSubmit = (e: React.FormEvent) => {
+  // Redirect if already logged in
+  if (user) {
+    navigate("/", { replace: true });
+    return null;
+  }
+
+  const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
-    navigate("/");
+    setLoading(true);
+
+    if (isSignup) {
+      const { error } = await signUp(email, password, name);
+      if (error) {
+        toast.error(error);
+      } else {
+        toast.success("Conta criada! Verifique seu email para confirmar.");
+      }
+    } else {
+      const { error } = await signIn(email, password);
+      if (error) {
+        toast.error(error);
+      } else {
+        navigate("/");
+      }
+    }
+    setLoading(false);
   };
 
   return (
@@ -54,6 +81,7 @@ const Login = () => {
                   onChange={(e) => setName(e.target.value)}
                   className="w-full bg-secondary text-foreground placeholder:text-muted-foreground pl-10 pr-4 py-3 rounded-lg text-sm outline-none border border-border focus:border-primary/50 transition-colors"
                   aria-label="Nome completo"
+                  required
                 />
               </div>
             )}
@@ -67,6 +95,7 @@ const Login = () => {
                 onChange={(e) => setEmail(e.target.value)}
                 className="w-full bg-secondary text-foreground placeholder:text-muted-foreground pl-10 pr-4 py-3 rounded-lg text-sm outline-none border border-border focus:border-primary/50 transition-colors"
                 aria-label="Email"
+                required
               />
             </div>
 
@@ -79,6 +108,8 @@ const Login = () => {
                 onChange={(e) => setPassword(e.target.value)}
                 className="w-full bg-secondary text-foreground placeholder:text-muted-foreground pl-10 pr-12 py-3 rounded-lg text-sm outline-none border border-border focus:border-primary/50 transition-colors"
                 aria-label="Senha"
+                required
+                minLength={6}
               />
               <button
                 type="button"
@@ -90,9 +121,13 @@ const Login = () => {
               </button>
             </div>
 
-            <Button type="submit" className="w-full gradient-bg text-primary-foreground font-semibold py-3 hover:opacity-90 transition-opacity gap-2">
-              {isSignup ? "Criar Conta" : "Entrar"}
-              <ArrowRight className="w-4 h-4" />
+            <Button
+              type="submit"
+              disabled={loading}
+              className="w-full gradient-bg text-primary-foreground font-semibold py-3 hover:opacity-90 transition-opacity gap-2"
+            >
+              {loading ? "Carregando..." : isSignup ? "Criar Conta" : "Entrar"}
+              {!loading && <ArrowRight className="w-4 h-4" />}
             </Button>
           </form>
 
