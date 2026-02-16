@@ -186,7 +186,7 @@ const Index = () => {
 
         {/* Stat Cards */}
         <div className="grid grid-cols-1 md:grid-cols-3 gap-5">
-          <StatCard icon={Wallet} label="Saldo Total" value={fmt(saldoTotal)} negative={saldoTotal < 0} />
+          <StatCard icon={Wallet} label="Saldo Total" value={fmt(saldoTotal)} negative={receitas < 0} />
           <StatCard icon={TrendingUp} label="Receitas" value={fmt(receitas)} negative={receitas < 0} />
           <StatCard icon={CreditCard} label="Despesas" value={fmt(despesas)} />
         </div>
