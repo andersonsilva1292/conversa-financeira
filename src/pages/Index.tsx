@@ -71,9 +71,12 @@ const Index = () => {
 
   useEffect(() => { fetchTransactions(); }, [user]);
 
-  const income = transactions.filter(t => t.amount > 0).reduce((a, t) => a + t.amount, 0);
-  const expenses = transactions.filter(t => t.amount < 0).reduce((a, t) => a + Math.abs(t.amount), 0);
-  const balance = income - expenses;
+  // Saldo Total = soma das rendas (salário, investimentos positivos)
+  const saldoTotal = transactions.filter(t => t.amount > 0).reduce((a, t) => a + t.amount, 0);
+  // Despesas = soma dos gastos (valores negativos)
+  const despesas = transactions.filter(t => t.amount < 0).reduce((a, t) => a + Math.abs(t.amount), 0);
+  // Receitas = Saldo Total - Despesas (o que sobra)
+  const receitas = saldoTotal - despesas;
 
   const categoryData = Object.entries(
     transactions.filter(t => t.amount < 0).reduce((acc, t) => {
@@ -181,9 +184,9 @@ const Index = () => {
 
         {/* Stat Cards */}
         <div className="grid grid-cols-1 md:grid-cols-3 gap-5">
-          <StatCard icon={Wallet} label="Saldo Total" value={fmt(balance)} negative={balance < 0} />
-          <StatCard icon={TrendingUp} label="Receitas" value={fmt(income)} negative={income < 0} />
-          <StatCard icon={CreditCard} label="Despesas" value={fmt(expenses)} negative={expenses > 0} />
+          <StatCard icon={Wallet} label="Saldo Total" value={fmt(saldoTotal)} negative={saldoTotal < 0} />
+          <StatCard icon={TrendingUp} label="Receitas" value={fmt(receitas)} negative={receitas < 0} />
+          <StatCard icon={CreditCard} label="Despesas" value={fmt(despesas)} />
         </div>
 
         {transactions.length > 0 && (
