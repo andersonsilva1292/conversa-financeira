@@ -31,7 +31,7 @@ const Sidebar = () => {
         <div className="w-10 h-10 rounded-xl gradient-bg flex items-center justify-center">
           <Wallet className="w-5 h-5 text-primary-foreground" />
         </div>
-        <h1 className="text-xl font-bold font-display text-foreground">FinançaIA</h1>
+        <h1 className="text-xl font-bold font-display text-foreground">Finança IA</h1>
       </div>
 
       <nav className="flex-1 px-3 py-4 space-y-1">
