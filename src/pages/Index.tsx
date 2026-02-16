@@ -100,8 +100,10 @@ const Index = () => {
 
   const handleSave = async () => {
     if (!user || !form.description || !form.amount) return;
-    const amount = parseFloat(form.amount);
+    let amount = parseFloat(form.amount);
     if (isNaN(amount)) return;
+    // Despesas (não-Renda) devem ser negativas
+    if (form.category !== "Renda" && amount > 0) amount = -amount;
 
     if (editingTx) {
       const { error } = await supabase.from("transactions").update({
