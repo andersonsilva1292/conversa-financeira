@@ -1,6 +1,9 @@
 import { Link, useLocation } from "react-router-dom";
 import { LayoutDashboard, MessageCircle, Target, BarChart3, LogOut, User, Wallet } from "lucide-react";
 import { motion } from "framer-motion";
+import { useAuth } from "@/hooks/useAuth";
+import { useEffect, useState } from "react";
+import { supabase } from "@/integrations/supabase/client";
 
 const navItems = [
   { path: "/", label: "Painel", icon: LayoutDashboard },
@@ -11,6 +14,16 @@ const navItems = [
 
 const Sidebar = () => {
   const location = useLocation();
+  const { user, signOut } = useAuth();
+  const [displayName, setDisplayName] = useState("Usuário");
+
+  useEffect(() => {
+    if (user) {
+      supabase.from("profiles").select("display_name").eq("user_id", user.id).maybeSingle().then(({ data }) => {
+        if (data?.display_name) setDisplayName(data.display_name);
+      });
+    }
+  }, [user]);
 
   return (
     <aside className="fixed left-0 top-0 h-screen w-64 bg-sidebar border-r border-sidebar-border flex flex-col z-50">
@@ -54,12 +67,12 @@ const Sidebar = () => {
             <User className="w-4 h-4 text-secondary-foreground" />
           </div>
           <div className="flex-1 min-w-0">
-            <p className="text-sm font-medium text-foreground truncate">Usuário</p>
-            <p className="text-xs text-muted-foreground truncate">Conta gratuita</p>
+            <p className="text-sm font-medium text-foreground truncate">{displayName}</p>
+            <p className="text-xs text-muted-foreground truncate">{user?.email}</p>
           </div>
-          <Link to="/login" className="text-muted-foreground hover:text-foreground transition-colors">
+          <button onClick={signOut} className="text-muted-foreground hover:text-foreground transition-colors" aria-label="Sair">
             <LogOut className="w-4 h-4" />
-          </Link>
+          </button>
         </div>
       </div>
     </aside>
