@@ -1,7 +1,8 @@
 📄 Product Requirements Document (PRD)
 - Produto: Finança IA – Inteligência Financeira Pessoal
 - Autor: Anderson dos Santos Silva
-- Data: Fevereiro/2026
+- Data: Fevereiro/2026  
+  https://organizaodefinanaspessoaisia.lovable.app/login
   
 **Este projeto foi desenvolvido com um Desafio de projeto da DIO de Vibe Coding utilizando o Lovable e o Copilot Web. 
 A proposta é criar um aplicativo de organização financeira pessoal baseado em interações em linguagem Natural.**
