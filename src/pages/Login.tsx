@@ -45,7 +45,15 @@ const Login = () => {
   };
 
   return (
-    <div className="min-h-screen bg-background flex items-center justify-center p-4 page-glow">
+    <div className="min-h-screen bg-background flex flex-col items-center justify-center p-4 page-glow relative">
+      {/* Logo no canto superior direito */}
+      <div className="absolute top-6 right-6 z-20 flex items-center gap-2">
+        <div className="w-10 h-10 rounded-xl gradient-bg flex items-center justify-center">
+          <Wallet className="w-5 h-5 text-primary-foreground" />
+        </div>
+        <span className="text-lg font-bold font-display text-foreground">Finança IA</span>
+      </div>
+
       <div className="relative z-10 w-full max-w-md">
         <motion.div
           initial={{ opacity: 0, y: 20 }}
@@ -142,6 +150,11 @@ const Login = () => {
           </div>
         </motion.div>
       </div>
+
+      {/* Rodapé */}
+      <p className="absolute bottom-4 text-xs text-muted-foreground/50">
+        Desenvolvido por Anderson dos Santos Silva
+      </p>
     </div>
   );
 };
