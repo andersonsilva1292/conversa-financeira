@@ -46,13 +46,7 @@ const Login = () => {
 
   return (
     <div className="min-h-screen bg-background flex flex-col items-center justify-center p-4 page-glow relative">
-      {/* Logo no canto superior direito */}
-      <div className="absolute top-6 right-6 z-20 flex items-center gap-2">
-        <div className="w-10 h-10 rounded-xl gradient-bg flex items-center justify-center">
-          <Wallet className="w-5 h-5 text-primary-foreground" />
-        </div>
-        <span className="text-lg font-bold font-display text-foreground">Finança IA</span>
-      </div>
+
 
       <div className="relative z-10 w-full max-w-md">
         <motion.div
