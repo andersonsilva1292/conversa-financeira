@@ -81,13 +81,13 @@ const Reports = () => {
         {!hasData ? (
           <motion.div variants={itemVariants} className="glass-card p-10 text-center">
             <BarChart3 className="w-12 h-12 text-primary mx-auto mb-4" />
-            <h3 className="font-display font-semibold text-foreground text-lg mb-2">Sem dados ainda</h3>
+            <h2 className="font-display font-semibold text-foreground text-lg mb-2">Sem dados ainda</h2>
             <p className="text-muted-foreground text-sm">Registre transações para ver relatórios detalhados aqui.</p>
           </motion.div>
         ) : (
           <>
             <motion.div variants={itemVariants} className="glass-card p-6">
-              <h3 className="font-display font-semibold text-foreground mb-6">Receitas vs Despesas</h3>
+              <h2 className="font-display font-semibold text-foreground mb-6">Receitas vs Despesas</h2>
               <ResponsiveContainer width="100%" height={300}>
                 <BarChart data={monthlyData} barGap={4}>
                   <XAxis dataKey="month" axisLine={false} tickLine={false} tick={{ fill: "hsl(220, 10%, 55%)", fontSize: 12 }} />
@@ -101,7 +101,7 @@ const Reports = () => {
 
             <div className="grid grid-cols-1 lg:grid-cols-2 gap-5">
               <motion.div variants={itemVariants} className="glass-card p-6">
-                <h3 className="font-display font-semibold text-foreground mb-6">Evolução do Saldo</h3>
+                <h2 className="font-display font-semibold text-foreground mb-6">Evolução do Saldo</h2>
                 <ResponsiveContainer width="100%" height={250}>
                   <LineChart data={trendData}>
                     <XAxis dataKey="month" axisLine={false} tickLine={false} tick={{ fill: "hsl(220, 10%, 55%)", fontSize: 12 }} />
@@ -114,7 +114,7 @@ const Reports = () => {
 
               {categoryBreakdown.length > 0 && (
                 <motion.div variants={itemVariants} className="glass-card p-6">
-                  <h3 className="font-display font-semibold text-foreground mb-6">Despesas por Categoria</h3>
+                  <h2 className="font-display font-semibold text-foreground mb-6">Despesas por Categoria</h2>
                   <div className="flex items-center gap-6">
                     <ResponsiveContainer width="50%" height={200}>
                       <PieChart>

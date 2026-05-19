@@ -154,13 +154,7 @@ const Index = () => {
         <motion.div variants={itemVariants} className="flex items-center justify-between">
           <div>
             <p className="text-sm text-muted-foreground mb-1">Finança IA</p>
-            <h1 className="text-3xl font-bold font-display text-foreground">{(() => {
-              const now = new Date();
-              const brasiliaHour = new Date(now.toLocaleString("en-US", { timeZone: "America/Sao_Paulo" })).getHours();
-              if (brasiliaHour >= 5 && brasiliaHour < 12) return "Bom dia! 👋";
-              if (brasiliaHour >= 12 && brasiliaHour < 18) return "Boa tarde! 👋";
-              return "Boa noite! 👋";
-            })()}</h1>
+            <h1 className="text-3xl font-bold font-display text-foreground">Painel Financeiro</h1>
             <p className="text-muted-foreground mt-1">
               {transactions.length === 0 ? "Comece registrando sua primeira transação" : "Aqui está o resumo das suas finanças"}
             </p>
