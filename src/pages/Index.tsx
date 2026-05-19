@@ -197,7 +197,7 @@ const Index = () => {
             {/* Charts */}
             <div className="grid grid-cols-1 lg:grid-cols-3 gap-5">
               <motion.div variants={itemVariants} className="glass-card p-5 lg:col-span-2">
-                <h3 className="font-display font-semibold text-foreground mb-4">Gastos da Semana</h3>
+                <h2 className="font-display font-semibold text-foreground mb-4">Gastos da Semana</h2>
                 <ResponsiveContainer width="100%" height={220}>
                   <AreaChart data={weeklyData}>
                     <defs>
@@ -219,7 +219,7 @@ const Index = () => {
 
               {categoryData.length > 0 && (
                 <motion.div variants={itemVariants} className="glass-card p-5">
-                  <h3 className="font-display font-semibold text-foreground mb-4">Por Categoria</h3>
+                  <h2 className="font-display font-semibold text-foreground mb-4">Por Categoria</h2>
                   <ResponsiveContainer width="100%" height={160}>
                     <PieChart>
                       <Pie data={categoryData} cx="50%" cy="50%" innerRadius={45} outerRadius={70} paddingAngle={3} dataKey="value">
@@ -245,7 +245,7 @@ const Index = () => {
             {/* Recent Transactions */}
             <motion.div variants={itemVariants} className="glass-card p-5">
               <div className="flex items-center justify-between mb-4">
-                <h3 className="font-display font-semibold text-foreground">Transações Recentes</h3>
+                <h2 className="font-display font-semibold text-foreground">Transações Recentes</h2>
               </div>
               <div className="space-y-2">
                 {transactions.slice(0, 10).map((t) => (
@@ -278,7 +278,7 @@ const Index = () => {
         {transactions.length === 0 && !loading && (
           <motion.div variants={itemVariants} className="glass-card p-10 text-center">
             <PiggyBank className="w-12 h-12 text-primary mx-auto mb-4" />
-            <h3 className="font-display font-semibold text-foreground text-lg mb-2">Nenhuma transação ainda</h3>
+            <h2 className="font-display font-semibold text-foreground text-lg mb-2">Nenhuma transação ainda</h2>
             <p className="text-muted-foreground text-sm mb-4">Clique em "Nova Transação" ou use o Chat IA para registrar seus gastos e receitas.</p>
           </motion.div>
         )}
