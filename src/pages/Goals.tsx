@@ -148,8 +148,8 @@ const Goals = () => {
                     <div className="flex items-center gap-2">
                       <span className="text-sm font-bold text-foreground">{Math.round(progress)}%</span>
                       <div className="flex gap-1 opacity-0 group-hover:opacity-100 transition-opacity">
-                        <button onClick={() => openEdit(goal)} className="p-1 rounded hover:bg-secondary text-muted-foreground hover:text-foreground"><Pencil className="w-3.5 h-3.5" /></button>
-                        <button onClick={() => handleDelete(goal.id)} className="p-1 rounded hover:bg-destructive/10 text-muted-foreground hover:text-destructive"><Trash2 className="w-3.5 h-3.5" /></button>
+                        <button onClick={() => openEdit(goal)} aria-label="Editar meta" className="p-1 rounded hover:bg-secondary text-muted-foreground hover:text-foreground"><Pencil className="w-3.5 h-3.5" /></button>
+                        <button onClick={() => handleDelete(goal.id)} aria-label="Excluir meta" className="p-1 rounded hover:bg-destructive/10 text-muted-foreground hover:text-destructive"><Trash2 className="w-3.5 h-3.5" /></button>
                       </div>
                     </div>
                   </div>
@@ -167,7 +167,7 @@ const Goals = () => {
         ) : !loading ? (
           <motion.div variants={itemVariants} className="glass-card p-10 text-center">
             <Target className="w-12 h-12 text-primary mx-auto mb-4" />
-            <h3 className="font-display font-semibold text-foreground text-lg mb-2">Nenhuma meta ainda</h3>
+            <h2 className="font-display font-semibold text-foreground text-lg mb-2">Nenhuma meta ainda</h2>
             <p className="text-muted-foreground text-sm">Clique em "Nova Meta" para criar seu primeiro objetivo financeiro.</p>
           </motion.div>
         ) : null}
