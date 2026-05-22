@@ -1,5 +1,5 @@
 import { motion } from "framer-motion";
-import { BarChart3, Calendar } from "lucide-react";
+import { BarChart3, Calendar, CreditCard } from "lucide-react";
 import { BarChart, Bar, XAxis, YAxis, Tooltip, ResponsiveContainer, LineChart, Line, PieChart, Pie, Cell } from "recharts";
 import AppLayout from "@/components/AppLayout";
 import { useState, useEffect, useMemo } from "react";
@@ -26,12 +26,22 @@ const itemVariants = { hidden: { opacity: 0, y: 16 }, show: { opacity: 1, y: 0, 
 const Reports = () => {
   const { user } = useAuth();
   const [transactions, setTransactions] = useState<any[]>([]);
+  const [cardTx, setCardTx] = useState<any[]>([]);
 
   useEffect(() => {
     if (!user) return;
     supabase.from("transactions").select("*").eq("user_id", user.id).order("transaction_date", { ascending: true })
       .then(({ data }) => setTransactions(data || []));
+    supabase.from("card_transactions").select("*").eq("user_id", user.id).order("transaction_date", { ascending: false })
+      .then(({ data }) => setCardTx(data || []));
   }, [user]);
+
+  const cardTotal = cardTx.reduce((a, i) => a + Number(i.amount), 0);
+  const cardByPerson = useMemo(() => {
+    const m: Record<string, number> = {};
+    cardTx.forEach(i => { m[i.person_name] = (m[i.person_name] || 0) + Number(i.amount); });
+    return Object.entries(m).sort((a, b) => b[1] - a[1]);
+  }, [cardTx]);
 
   const monthlyData = useMemo(() => {
     const months: Record<string, { receita: number; despesa: number }> = {};
