@@ -1,5 +1,5 @@
 import { motion } from "framer-motion";
-import { BarChart3, Calendar } from "lucide-react";
+import { BarChart3, Calendar, CreditCard } from "lucide-react";
 import { BarChart, Bar, XAxis, YAxis, Tooltip, ResponsiveContainer, LineChart, Line, PieChart, Pie, Cell } from "recharts";
 import AppLayout from "@/components/AppLayout";
 import { useState, useEffect, useMemo } from "react";
@@ -26,12 +26,22 @@ const itemVariants = { hidden: { opacity: 0, y: 16 }, show: { opacity: 1, y: 0, 
 const Reports = () => {
   const { user } = useAuth();
   const [transactions, setTransactions] = useState<any[]>([]);
+  const [cardTx, setCardTx] = useState<any[]>([]);
 
   useEffect(() => {
     if (!user) return;
     supabase.from("transactions").select("*").eq("user_id", user.id).order("transaction_date", { ascending: true })
       .then(({ data }) => setTransactions(data || []));
+    supabase.from("card_transactions").select("*").eq("user_id", user.id).order("transaction_date", { ascending: false })
+      .then(({ data }) => setCardTx(data || []));
   }, [user]);
+
+  const cardTotal = cardTx.reduce((a, i) => a + Number(i.amount), 0);
+  const cardByPerson = useMemo(() => {
+    const m: Record<string, number> = {};
+    cardTx.forEach(i => { m[i.person_name] = (m[i.person_name] || 0) + Number(i.amount); });
+    return Object.entries(m).sort((a, b) => b[1] - a[1]);
+  }, [cardTx]);
 
   const monthlyData = useMemo(() => {
     const months: Record<string, { receita: number; despesa: number }> = {};
@@ -145,6 +155,36 @@ const Reports = () => {
               )}
             </div>
           </>
+        )}
+
+        {cardTx.length > 0 && (
+          <motion.div variants={itemVariants} className="glass-card p-6">
+            <h2 className="font-display font-semibold text-foreground mb-6 flex items-center gap-2">
+              <CreditCard className="w-5 h-5 text-primary" />
+              Cartão de Crédito
+            </h2>
+            <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+              <div>
+                <p className="text-sm text-muted-foreground mb-1">Total da Fatura</p>
+                <p className="text-2xl font-bold font-display text-foreground">
+                  R$ {cardTotal.toLocaleString("pt-BR", { minimumFractionDigits: 2 })}
+                </p>
+              </div>
+              <div>
+                <p className="text-sm text-muted-foreground mb-2">Por Pessoa</p>
+                <div className="space-y-2">
+                  {cardByPerson.map(([name, value]) => (
+                    <div key={name} className="flex items-center justify-between text-sm">
+                      <span className="text-muted-foreground">{name}</span>
+                      <span className="text-foreground font-semibold">
+                        R$ {value.toLocaleString("pt-BR", { minimumFractionDigits: 2 })}
+                      </span>
+                    </div>
+                  ))}
+                </div>
+              </div>
+            </div>
+          </motion.div>
         )}
       </motion.div>
     </AppLayout>

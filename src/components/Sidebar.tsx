@@ -1,5 +1,5 @@
 import { Link, useLocation } from "react-router-dom";
-import { LayoutDashboard, MessageCircle, Target, BarChart3, LogOut, User, Wallet } from "lucide-react";
+import { LayoutDashboard, MessageCircle, Target, BarChart3, LogOut, User, Wallet, CreditCard } from "lucide-react";
 import { motion } from "framer-motion";
 import { useAuth } from "@/hooks/useAuth";
 import { useEffect, useState } from "react";
@@ -7,6 +7,7 @@ import { supabase } from "@/integrations/supabase/client";
 
 const navItems = [
   { path: "/", label: "Painel", icon: LayoutDashboard },
+  { path: "/cartao", label: "Cartão de Crédito", icon: CreditCard },
   { path: "/chat", label: "Chat IA", icon: MessageCircle },
   { path: "/metas", label: "Metas", icon: Target },
   { path: "/relatorios", label: "Relatórios", icon: BarChart3 },

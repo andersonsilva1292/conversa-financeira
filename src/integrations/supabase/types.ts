@@ -14,6 +14,39 @@ export type Database = {
   }
   public: {
     Tables: {
+      card_transactions: {
+        Row: {
+          amount: number
+          created_at: string
+          description: string
+          id: string
+          person_name: string
+          transaction_date: string
+          updated_at: string
+          user_id: string
+        }
+        Insert: {
+          amount: number
+          created_at?: string
+          description: string
+          id?: string
+          person_name: string
+          transaction_date?: string
+          updated_at?: string
+          user_id: string
+        }
+        Update: {
+          amount?: number
+          created_at?: string
+          description?: string
+          id?: string
+          person_name?: string
+          transaction_date?: string
+          updated_at?: string
+          user_id?: string
+        }
+        Relationships: []
+      }
       goals: {
         Row: {
           color: string | null
