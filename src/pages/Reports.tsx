@@ -156,6 +156,36 @@ const Reports = () => {
             </div>
           </>
         )}
+
+        {cardTx.length > 0 && (
+          <motion.div variants={itemVariants} className="glass-card p-6">
+            <h2 className="font-display font-semibold text-foreground mb-6 flex items-center gap-2">
+              <CreditCard className="w-5 h-5 text-primary" />
+              Cartão de Crédito
+            </h2>
+            <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+              <div>
+                <p className="text-sm text-muted-foreground mb-1">Total da Fatura</p>
+                <p className="text-2xl font-bold font-display text-foreground">
+                  R$ {cardTotal.toLocaleString("pt-BR", { minimumFractionDigits: 2 })}
+                </p>
+              </div>
+              <div>
+                <p className="text-sm text-muted-foreground mb-2">Por Pessoa</p>
+                <div className="space-y-2">
+                  {cardByPerson.map(([name, value]) => (
+                    <div key={name} className="flex items-center justify-between text-sm">
+                      <span className="text-muted-foreground">{name}</span>
+                      <span className="text-foreground font-semibold">
+                        R$ {value.toLocaleString("pt-BR", { minimumFractionDigits: 2 })}
+                      </span>
+                    </div>
+                  ))}
+                </div>
+              </div>
+            </div>
+          </motion.div>
+        )}
       </motion.div>
     </AppLayout>
   );
