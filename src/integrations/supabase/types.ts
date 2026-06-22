@@ -17,30 +17,42 @@ export type Database = {
       card_transactions: {
         Row: {
           amount: number
+          category: string
           created_at: string
           description: string
           id: string
+          paid_installments: number
+          payment_type: string
           person_name: string
+          total_installments: number
           transaction_date: string
           updated_at: string
           user_id: string
         }
         Insert: {
           amount: number
+          category?: string
           created_at?: string
           description: string
           id?: string
+          paid_installments?: number
+          payment_type?: string
           person_name: string
+          total_installments?: number
           transaction_date?: string
           updated_at?: string
           user_id: string
         }
         Update: {
           amount?: number
+          category?: string
           created_at?: string
           description?: string
           id?: string
+          paid_installments?: number
+          payment_type?: string
           person_name?: string
+          total_installments?: number
           transaction_date?: string
           updated_at?: string
           user_id?: string
