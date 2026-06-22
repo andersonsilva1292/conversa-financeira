@@ -1,0 +1,5 @@
+ALTER TABLE public.card_transactions
+  ADD COLUMN IF NOT EXISTS category TEXT NOT NULL DEFAULT 'Contas Divididas',
+  ADD COLUMN IF NOT EXISTS payment_type TEXT NOT NULL DEFAULT 'A Vista',
+  ADD COLUMN IF NOT EXISTS total_installments INTEGER NOT NULL DEFAULT 1,
+  ADD COLUMN IF NOT EXISTS paid_installments INTEGER NOT NULL DEFAULT 0;
