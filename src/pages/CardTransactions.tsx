@@ -208,6 +208,7 @@ const CardTransactions = () => {
                     value={form.person_name}
                     onChange={e => setForm(f => ({ ...f, person_name: e.target.value }))}
                     placeholder="Ex: Anderson, Mariana"
+                    aria-label="Quem gastou"
                     maxLength={60}
                     className="w-full bg-secondary text-foreground placeholder:text-muted-foreground px-4 py-3 rounded-lg text-sm outline-none border border-border focus:border-primary/50"
                   />
@@ -222,6 +223,7 @@ const CardTransactions = () => {
                     value={form.description}
                     onChange={e => setForm(f => ({ ...f, description: e.target.value }))}
                     placeholder="Ex: Supermercado, UBER, Aluguel..."
+                    aria-label="Descrição do lançamento"
                     maxLength={120}
                     className="w-full bg-secondary text-foreground placeholder:text-muted-foreground px-4 py-3 rounded-lg text-sm outline-none border border-border focus:border-primary/50"
                   />
@@ -235,6 +237,7 @@ const CardTransactions = () => {
                       value={form.amount}
                       onChange={e => setForm(f => ({ ...f, amount: e.target.value }))}
                       placeholder="0,00"
+                      aria-label="Valor total"
                       className="w-full bg-secondary text-foreground placeholder:text-muted-foreground px-4 py-3 rounded-lg text-sm outline-none border border-border focus:border-primary/50"
                     />
                   </div>
@@ -244,6 +247,7 @@ const CardTransactions = () => {
                       type="date"
                       value={form.transaction_date}
                       onChange={e => setForm(f => ({ ...f, transaction_date: e.target.value }))}
+                      aria-label="Data do lançamento"
                       className="w-full bg-secondary text-foreground px-4 py-3 rounded-lg text-sm outline-none border border-border focus:border-primary/50"
                     />
                   </div>
@@ -254,6 +258,7 @@ const CardTransactions = () => {
                   <select
                     value={form.category}
                     onChange={e => setForm(f => ({ ...f, category: e.target.value }))}
+                    aria-label="Categoria"
                     className="w-full bg-secondary text-foreground px-4 py-3 rounded-lg text-sm outline-none border border-border focus:border-primary/50"
                   >
                     {CATEGORIES.map(c => <option key={c} value={c}>{c}</option>)}
@@ -265,6 +270,7 @@ const CardTransactions = () => {
                     type="checkbox"
                     checked={form.is_installment}
                     onChange={e => setForm(f => ({ ...f, is_installment: e.target.checked }))}
+                    aria-label="Esta compra é parcelada"
                     className="w-4 h-4 accent-primary"
                   />
                   <span className="text-sm text-foreground">Esta compra é parcelada?</span>
@@ -278,6 +284,7 @@ const CardTransactions = () => {
                         type="number" min="1" step="1"
                         value={form.total_installments}
                         onChange={e => setForm(f => ({ ...f, total_installments: e.target.value }))}
+                        aria-label="Total de parcelas"
                         className="w-full bg-secondary text-foreground px-4 py-3 rounded-lg text-sm outline-none border border-border focus:border-primary/50"
                       />
                     </div>
@@ -287,6 +294,7 @@ const CardTransactions = () => {
                         type="number" min="0" step="1"
                         value={form.paid_installments}
                         onChange={e => setForm(f => ({ ...f, paid_installments: e.target.value }))}
+                        aria-label="Parcelas já pagas"
                         className="w-full bg-secondary text-foreground px-4 py-3 rounded-lg text-sm outline-none border border-border focus:border-primary/50"
                       />
                     </div>
