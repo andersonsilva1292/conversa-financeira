@@ -171,12 +171,12 @@ const Index = () => {
                 <DialogTitle className="font-display">{editingTx ? "Editar Transação" : "Nova Transação"}</DialogTitle>
               </DialogHeader>
               <div className="space-y-4 mt-2">
-                <input value={form.description} onChange={e => setForm(f => ({ ...f, description: e.target.value }))} placeholder="Descrição" className="w-full bg-secondary text-foreground placeholder:text-muted-foreground px-4 py-3 rounded-lg text-sm outline-none border border-border focus:border-primary/50" />
-                <input type="number" step="0.01" value={form.amount} onChange={e => setForm(f => ({ ...f, amount: e.target.value }))} placeholder="Valor: Positivo +1 ou Negativo -1" className="w-full bg-secondary text-foreground placeholder:text-muted-foreground px-4 py-3 rounded-lg text-sm outline-none border border-border focus:border-primary/50" />
-                <select value={form.category} onChange={e => setForm(f => ({ ...f, category: e.target.value }))} className="w-full bg-secondary text-foreground px-4 py-3 rounded-lg text-sm outline-none border border-border focus:border-primary/50">
+                <input value={form.description} onChange={e => setForm(f => ({ ...f, description: e.target.value }))} placeholder="Descrição" aria-label="Descrição da transação" className="w-full bg-secondary text-foreground placeholder:text-muted-foreground px-4 py-3 rounded-lg text-sm outline-none border border-border focus:border-primary/50" />
+                <input type="number" step="0.01" value={form.amount} onChange={e => setForm(f => ({ ...f, amount: e.target.value }))} placeholder="Valor: Positivo +1 ou Negativo -1" aria-label="Valor da transação" className="w-full bg-secondary text-foreground placeholder:text-muted-foreground px-4 py-3 rounded-lg text-sm outline-none border border-border focus:border-primary/50" />
+                <select value={form.category} onChange={e => setForm(f => ({ ...f, category: e.target.value }))} aria-label="Categoria da transação" className="w-full bg-secondary text-foreground px-4 py-3 rounded-lg text-sm outline-none border border-border focus:border-primary/50">
                   {Object.keys(categoryIcons).map(c => <option key={c} value={c}>{c}</option>)}
                 </select>
-                <input type="date" value={form.transaction_date} onChange={e => setForm(f => ({ ...f, transaction_date: e.target.value }))} className="w-full bg-secondary text-foreground px-4 py-3 rounded-lg text-sm outline-none border border-border focus:border-primary/50" />
+                <input type="date" value={form.transaction_date} onChange={e => setForm(f => ({ ...f, transaction_date: e.target.value }))} aria-label="Data da transação" className="w-full bg-secondary text-foreground px-4 py-3 rounded-lg text-sm outline-none border border-border focus:border-primary/50" />
                 <Button onClick={handleSave} className="w-full gradient-bg text-primary-foreground font-semibold">
                   {editingTx ? "Salvar Alterações" : "Adicionar"}
                 </Button>
