@@ -241,6 +241,7 @@ const CardTransactions = () => {
                 <div className="space-y-1.5">
                   <label className="text-xs text-muted-foreground">Descrição</label>
                   <input
+                    list="known-descriptions"
                     value={form.description}
                     onChange={e => setForm(f => ({ ...f, description: e.target.value }))}
                     placeholder="Ex: Supermercado, UBER, Aluguel..."
@@ -248,6 +249,9 @@ const CardTransactions = () => {
                     maxLength={120}
                     className="w-full bg-secondary text-foreground placeholder:text-muted-foreground px-4 py-3 rounded-lg text-sm outline-none border border-border focus:border-primary/50"
                   />
+                  <datalist id="known-descriptions">
+                    {knownDescriptions.map(d => <option key={d} value={d} />)}
+                  </datalist>
                 </div>
 
                 <div className="grid grid-cols-2 gap-3">
