@@ -53,6 +53,13 @@ const emptyForm = () => ({
   paid_installments: "0",
 });
 
+const DEFAULT_PEOPLE = ["ANDERSON", "SANDOVAL", "MÃE"];
+const PERSON_ORDER = ["ANDERSON", "SANDOVAL", "MÃE"];
+const personRank = (name: string) => {
+  const idx = PERSON_ORDER.findIndex(p => p.localeCompare(name, "pt-BR", { sensitivity: "base" }) === 0);
+  return idx === -1 ? PERSON_ORDER.length : idx;
+};
+
 const CardTransactions = () => {
   const { user } = useAuth();
   const [items, setItems] = useState<CardTx[]>([]);
