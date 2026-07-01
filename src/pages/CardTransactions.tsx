@@ -19,6 +19,7 @@ type CardTx = {
   payment_type: string;
   total_installments: number;
   paid_installments: number;
+  created_at?: string;
 };
 
 const CATEGORIES = [
@@ -100,7 +101,7 @@ const CardTransactions = () => {
     [items]
   );
 
-  // Saldo devedor por pessoa = (parcelas restantes) * (valor da parcela)
+  // Total devedor por pessoa = apenas a parcela do mês atual (não soma parcelas futuras)
   const byPerson = useMemo(() => {
     const m: Record<string, { pending: number; current: number }> = {};
     items.forEach(i => {
@@ -109,10 +110,9 @@ const CardTransactions = () => {
       const p = Math.min(n, Math.max(0, i.paid_installments || 0));
       const installmentValue = total / n;
       const remaining = n - p;
-      const pending = installmentValue * remaining;
       const current = remaining > 0 ? installmentValue : 0;
       if (!m[i.person_name]) m[i.person_name] = { pending: 0, current: 0 };
-      m[i.person_name].pending += pending;
+      m[i.person_name].pending += current;
       m[i.person_name].current += current;
     });
     return Object.entries(m).sort((a, b) => b[1].pending - a[1].pending);
@@ -400,6 +400,7 @@ const CardTransactions = () => {
                       </div>
                       <p className="text-xs text-muted-foreground mt-0.5">
                         {t.person_name} · {new Date(t.transaction_date + "T12:00:00").toLocaleDateString("pt-BR", { day: "2-digit", month: "short" })}
+                        {t.created_at && <> · registrado {new Date(t.created_at).toLocaleString("pt-BR", { timeZone: "America/Sao_Paulo", day: "2-digit", month: "2-digit", year: "2-digit", hour: "2-digit", minute: "2-digit" })}</>}
                         {isParc && <> · parcela {fmt(installmentValue)}</>}
                       </p>
                     </div>
