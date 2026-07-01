@@ -23,11 +23,20 @@ type CardTx = {
 };
 
 const CATEGORIES = [
-  "Moradia & Home",
-  "Alimentação & Consumo",
-  "Transporte",
-  "Lazer & Estilo de Vida",
-  "Contas Divididas",
+  "MORADIA & HOME",
+  "ALIMENTAÇÃO & CONSUMO",
+  "TRANSPORTE",
+  "LAZER & ESTILO DE VIDA",
+  "CONTAS DIVIDIDAS",
+  "BEBIDAS",
+  "LANCHE",
+  "ELETRODOMÉSTICO",
+  "PET CACHORRO HENRIQUE",
+  "INFORMÁTICA",
+  "VERDURAS",
+  "TEMPERO E BEBIDAS DIVIDIDO",
+  "SUPERMERCADO",
+  "VEÍCULO MOTO",
 ];
 
 const PERSON_COLORS = [
