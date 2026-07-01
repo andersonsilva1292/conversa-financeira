@@ -77,6 +77,7 @@ const CardTransactions = () => {
   const [showForm, setShowForm] = useState(false);
   const [editing, setEditing] = useState<CardTx | null>(null);
   const [form, setForm] = useState(emptyForm());
+  const [filter, setFilter] = useState("");
 
   const fetchItems = async () => {
     if (!user) return;
