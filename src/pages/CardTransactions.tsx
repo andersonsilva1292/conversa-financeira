@@ -392,9 +392,21 @@ const CardTransactions = () => {
         {/* Lista de lançamentos */}
         {items.length > 0 ? (
           <motion.div variants={itemVariants} className="glass-card p-5">
-            <h2 className="font-display font-semibold text-foreground mb-4">Lançamentos</h2>
+            <div className="flex items-center justify-between gap-3 mb-4 flex-wrap">
+              <h2 className="font-display font-semibold text-foreground">Lançamentos</h2>
+              <input
+                value={filter}
+                onChange={e => setFilter(e.target.value.toUpperCase())}
+                placeholder="FILTRAR POR NOME, DESCRIÇÃO OU CATEGORIA..."
+                aria-label="Filtrar lançamentos"
+                className="w-full sm:w-80 bg-secondary text-foreground placeholder:text-muted-foreground px-3 py-2 rounded-lg text-xs outline-none border border-border focus:border-primary/50 uppercase"
+              />
+            </div>
+            {filteredItems.length === 0 && (
+              <p className="text-sm text-muted-foreground py-6 text-center">Nenhum lançamento corresponde ao filtro.</p>
+            )}
             <div className="space-y-2">
-              {items.map(t => {
+              {filteredItems.map(t => {
                 const n = Math.max(1, t.total_installments || 1);
                 const p = Math.min(n, Math.max(0, t.paid_installments || 0));
                 const installmentValue = Number(t.amount) / n;
