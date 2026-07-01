@@ -37,6 +37,8 @@ const CATEGORIES = [
   "TEMPERO E BEBIDAS DIVIDIDO",
   "SUPERMERCADO",
   "VEÍCULO MOTO",
+  "ENERGIA",
+  "ALUGUEL",
 ];
 
 const PERSON_COLORS = [
@@ -107,7 +109,7 @@ const CardTransactions = () => {
   );
 
   const knownDescriptions = useMemo(
-    () => Array.from(new Set(items.map(i => i.description).filter(Boolean))).slice(0, 100),
+    () => Array.from(new Set(items.map(i => (i.description || "").toUpperCase()).filter(Boolean))).sort().slice(0, 200),
     [items]
   );
 
