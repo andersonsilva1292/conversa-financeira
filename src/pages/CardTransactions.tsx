@@ -23,11 +23,20 @@ type CardTx = {
 };
 
 const CATEGORIES = [
-  "Moradia & Home",
-  "Alimentação & Consumo",
-  "Transporte",
-  "Lazer & Estilo de Vida",
-  "Contas Divididas",
+  "MORADIA & HOME",
+  "ALIMENTAÇÃO & CONSUMO",
+  "TRANSPORTE",
+  "LAZER & ESTILO DE VIDA",
+  "CONTAS DIVIDIDAS",
+  "BEBIDAS",
+  "LANCHE",
+  "ELETRODOMÉSTICO",
+  "PET CACHORRO HENRIQUE",
+  "INFORMÁTICA",
+  "VERDURAS",
+  "TEMPERO E BEBIDAS DIVIDIDO",
+  "SUPERMERCADO",
+  "VEÍCULO MOTO",
 ];
 
 const PERSON_COLORS = [
@@ -68,6 +77,7 @@ const CardTransactions = () => {
   const [showForm, setShowForm] = useState(false);
   const [editing, setEditing] = useState<CardTx | null>(null);
   const [form, setForm] = useState(emptyForm());
+  const [filter, setFilter] = useState("");
 
   const fetchItems = async () => {
     if (!user) return;
@@ -100,6 +110,16 @@ const CardTransactions = () => {
     () => Array.from(new Set(items.map(i => i.description).filter(Boolean))).slice(0, 100),
     [items]
   );
+
+  const filteredItems = useMemo(() => {
+    const q = filter.trim().toUpperCase();
+    if (!q) return items;
+    return items.filter(i =>
+      (i.person_name || "").toUpperCase().includes(q) ||
+      (i.description || "").toUpperCase().includes(q) ||
+      (i.category || "").toUpperCase().includes(q)
+    );
+  }, [items, filter]);
 
   // Total devedor por pessoa = apenas a parcela do mês atual (não soma parcelas futuras)
   const byPerson = useMemo(() => {
@@ -227,7 +247,7 @@ const CardTransactions = () => {
                   <input
                     list="known-people"
                     value={form.person_name}
-                    onChange={e => setForm(f => ({ ...f, person_name: e.target.value }))}
+                    onChange={e => setForm(f => ({ ...f, person_name: e.target.value.toUpperCase() }))}
                     placeholder="Ex: Anderson, Mariana"
                     aria-label="Quem gastou"
                     maxLength={60}
@@ -243,7 +263,7 @@ const CardTransactions = () => {
                   <input
                     list="known-descriptions"
                     value={form.description}
-                    onChange={e => setForm(f => ({ ...f, description: e.target.value }))}
+                    onChange={e => setForm(f => ({ ...f, description: e.target.value.toUpperCase() }))}
                     placeholder="Ex: Supermercado, UBER, Aluguel..."
                     aria-label="Descrição do lançamento"
                     maxLength={120}
@@ -372,9 +392,21 @@ const CardTransactions = () => {
         {/* Lista de lançamentos */}
         {items.length > 0 ? (
           <motion.div variants={itemVariants} className="glass-card p-5">
-            <h2 className="font-display font-semibold text-foreground mb-4">Lançamentos</h2>
+            <div className="flex items-center justify-between gap-3 mb-4 flex-wrap">
+              <h2 className="font-display font-semibold text-foreground">Lançamentos</h2>
+              <input
+                value={filter}
+                onChange={e => setFilter(e.target.value.toUpperCase())}
+                placeholder="FILTRAR POR NOME, DESCRIÇÃO OU CATEGORIA..."
+                aria-label="Filtrar lançamentos"
+                className="w-full sm:w-80 bg-secondary text-foreground placeholder:text-muted-foreground px-3 py-2 rounded-lg text-xs outline-none border border-border focus:border-primary/50 uppercase"
+              />
+            </div>
+            {filteredItems.length === 0 && (
+              <p className="text-sm text-muted-foreground py-6 text-center">Nenhum lançamento corresponde ao filtro.</p>
+            )}
             <div className="space-y-2">
-              {items.map(t => {
+              {filteredItems.map(t => {
                 const n = Math.max(1, t.total_installments || 1);
                 const p = Math.min(n, Math.max(0, t.paid_installments || 0));
                 const installmentValue = Number(t.amount) / n;
