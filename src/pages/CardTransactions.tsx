@@ -53,6 +53,13 @@ const emptyForm = () => ({
   paid_installments: "0",
 });
 
+const DEFAULT_PEOPLE = ["ANDERSON", "SANDOVAL", "MÃE"];
+const PERSON_ORDER = ["ANDERSON", "SANDOVAL", "MÃE"];
+const personRank = (name: string) => {
+  const idx = PERSON_ORDER.findIndex(p => p.localeCompare(name, "pt-BR", { sensitivity: "base" }) === 0);
+  return idx === -1 ? PERSON_ORDER.length : idx;
+};
+
 const CardTransactions = () => {
   const { user } = useAuth();
   const [items, setItems] = useState<CardTx[]>([]);
@@ -66,16 +73,30 @@ const CardTransactions = () => {
     const { data } = await supabase
       .from("card_transactions")
       .select("*")
-      .eq("user_id", user.id)
-      .order("transaction_date", { ascending: false });
-    setItems((data as CardTx[]) || []);
+      .eq("user_id", user.id);
+    const rows = (data as CardTx[]) || [];
+    rows.sort((a, b) => {
+      if (a.transaction_date !== b.transaction_date) {
+        return a.transaction_date < b.transaction_date ? 1 : -1;
+      }
+      const ra = personRank(a.person_name);
+      const rb = personRank(b.person_name);
+      if (ra !== rb) return ra - rb;
+      return a.person_name.localeCompare(b.person_name, "pt-BR");
+    });
+    setItems(rows);
     setLoading(false);
   };
 
   useEffect(() => { fetchItems(); }, [user]);
 
   const knownPeople = useMemo(
-    () => Array.from(new Set(items.map(i => i.person_name).filter(Boolean))),
+    () => Array.from(new Set([...DEFAULT_PEOPLE, ...items.map(i => i.person_name).filter(Boolean)])),
+    [items]
+  );
+
+  const knownDescriptions = useMemo(
+    () => Array.from(new Set(items.map(i => i.description).filter(Boolean))).slice(0, 100),
     [items]
   );
 
@@ -220,6 +241,7 @@ const CardTransactions = () => {
                 <div className="space-y-1.5">
                   <label className="text-xs text-muted-foreground">Descrição</label>
                   <input
+                    list="known-descriptions"
                     value={form.description}
                     onChange={e => setForm(f => ({ ...f, description: e.target.value }))}
                     placeholder="Ex: Supermercado, UBER, Aluguel..."
@@ -227,6 +249,9 @@ const CardTransactions = () => {
                     maxLength={120}
                     className="w-full bg-secondary text-foreground placeholder:text-muted-foreground px-4 py-3 rounded-lg text-sm outline-none border border-border focus:border-primary/50"
                   />
+                  <datalist id="known-descriptions">
+                    {knownDescriptions.map(d => <option key={d} value={d} />)}
+                  </datalist>
                 </div>
 
                 <div className="grid grid-cols-2 gap-3">
