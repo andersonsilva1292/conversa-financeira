@@ -100,7 +100,7 @@ const CardTransactions = () => {
     [items]
   );
 
-  // Saldo devedor por pessoa = (parcelas restantes) * (valor da parcela)
+  // Total devedor por pessoa = apenas a parcela do mês atual (não soma parcelas futuras)
   const byPerson = useMemo(() => {
     const m: Record<string, { pending: number; current: number }> = {};
     items.forEach(i => {
@@ -109,10 +109,9 @@ const CardTransactions = () => {
       const p = Math.min(n, Math.max(0, i.paid_installments || 0));
       const installmentValue = total / n;
       const remaining = n - p;
-      const pending = installmentValue * remaining;
       const current = remaining > 0 ? installmentValue : 0;
       if (!m[i.person_name]) m[i.person_name] = { pending: 0, current: 0 };
-      m[i.person_name].pending += pending;
+      m[i.person_name].pending += current;
       m[i.person_name].current += current;
     });
     return Object.entries(m).sort((a, b) => b[1].pending - a[1].pending);
