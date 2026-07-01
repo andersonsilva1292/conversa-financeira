@@ -111,6 +111,16 @@ const CardTransactions = () => {
     [items]
   );
 
+  const filteredItems = useMemo(() => {
+    const q = filter.trim().toUpperCase();
+    if (!q) return items;
+    return items.filter(i =>
+      (i.person_name || "").toUpperCase().includes(q) ||
+      (i.description || "").toUpperCase().includes(q) ||
+      (i.category || "").toUpperCase().includes(q)
+    );
+  }, [items, filter]);
+
   // Total devedor por pessoa = apenas a parcela do mês atual (não soma parcelas futuras)
   const byPerson = useMemo(() => {
     const m: Record<string, { pending: number; current: number }> = {};
