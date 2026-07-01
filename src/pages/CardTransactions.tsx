@@ -19,6 +19,7 @@ type CardTx = {
   payment_type: string;
   total_installments: number;
   paid_installments: number;
+  created_at?: string;
 };
 
 const CATEGORIES = [
