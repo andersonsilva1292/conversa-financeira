@@ -247,7 +247,7 @@ const CardTransactions = () => {
                   <input
                     list="known-people"
                     value={form.person_name}
-                    onChange={e => setForm(f => ({ ...f, person_name: e.target.value }))}
+                    onChange={e => setForm(f => ({ ...f, person_name: e.target.value.toUpperCase() }))}
                     placeholder="Ex: Anderson, Mariana"
                     aria-label="Quem gastou"
                     maxLength={60}
@@ -263,7 +263,7 @@ const CardTransactions = () => {
                   <input
                     list="known-descriptions"
                     value={form.description}
-                    onChange={e => setForm(f => ({ ...f, description: e.target.value }))}
+                    onChange={e => setForm(f => ({ ...f, description: e.target.value.toUpperCase() }))}
                     placeholder="Ex: Supermercado, UBER, Aluguel..."
                     aria-label="Descrição do lançamento"
                     maxLength={120}
