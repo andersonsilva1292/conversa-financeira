@@ -399,6 +399,7 @@ const CardTransactions = () => {
                       </div>
                       <p className="text-xs text-muted-foreground mt-0.5">
                         {t.person_name} · {new Date(t.transaction_date + "T12:00:00").toLocaleDateString("pt-BR", { day: "2-digit", month: "short" })}
+                        {t.created_at && <> · registrado {new Date(t.created_at).toLocaleString("pt-BR", { timeZone: "America/Sao_Paulo", day: "2-digit", month: "2-digit", year: "2-digit", hour: "2-digit", minute: "2-digit" })}</>}
                         {isParc && <> · parcela {fmt(installmentValue)}</>}
                       </p>
                     </div>
