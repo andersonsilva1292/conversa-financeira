@@ -73,16 +73,30 @@ const CardTransactions = () => {
     const { data } = await supabase
       .from("card_transactions")
       .select("*")
-      .eq("user_id", user.id)
-      .order("transaction_date", { ascending: false });
-    setItems((data as CardTx[]) || []);
+      .eq("user_id", user.id);
+    const rows = (data as CardTx[]) || [];
+    rows.sort((a, b) => {
+      if (a.transaction_date !== b.transaction_date) {
+        return a.transaction_date < b.transaction_date ? 1 : -1;
+      }
+      const ra = personRank(a.person_name);
+      const rb = personRank(b.person_name);
+      if (ra !== rb) return ra - rb;
+      return a.person_name.localeCompare(b.person_name, "pt-BR");
+    });
+    setItems(rows);
     setLoading(false);
   };
 
   useEffect(() => { fetchItems(); }, [user]);
 
   const knownPeople = useMemo(
-    () => Array.from(new Set(items.map(i => i.person_name).filter(Boolean))),
+    () => Array.from(new Set([...DEFAULT_PEOPLE, ...items.map(i => i.person_name).filter(Boolean)])),
+    [items]
+  );
+
+  const knownDescriptions = useMemo(
+    () => Array.from(new Set(items.map(i => i.description).filter(Boolean))).slice(0, 100),
     [items]
   );
 
